@@ -1,430 +1,456 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Personal Profile & Markdown Viewer</title>
-    <!-- Google Fonts for crisp typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <!-- Marked.js for robust markdown parsing -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <style>
-        :root {
-            --bg-color: #0f1115;
-            --sidebar-bg: #161920;
-            --card-bg: #1c202a;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.15);
-            --border-color: #2d3748;
-            --transition: all 0.25s ease;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to my website</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      width: 100%;
+      background-color: #f4f4f4;
+      color: #111111;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            overflow-x: hidden;
-        }
+    .viewport-frame {
+      min-height: 100vh;
+      width: 100%;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
 
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-color);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
-        }
+    .sheet {
+      width: 100%;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+    }
 
-        /* Layout Container */
-        .wrapper {
-            display: flex;
-            width: 100%;
-            min-height: 100vh;
-        }
+    .welcome-header {
+      background-color: #f9f9f9;
+      border-bottom: 1px solid #b5b5b5;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
 
-        /* Left Sidebar (West Side) */
-        aside.sidebar {
-            width: 320px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 2.5rem 2rem;
-            position: fixed;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            z-index: 100;
-            overflow-y: auto;
-        }
+    .app-icon-box {
+      width: 68px;
+      height: 68px;
+      flex-shrink: 0;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #b68452 0%, #8c5c2d 55%, #6e451e 100%);
+      border: 1px solid #5c3816;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 2px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .profile-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 100%;
-        }
+    .app-icon-text {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: #fff8f0;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35);
+      user-select: none;
+    }
 
-        /* Square Profile Picture */
-        .pfp-wrapper {
-            width: 110px;
-            height: 110px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid var(--border-color);
-            margin-bottom: 1.5rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            background-color: var(--card-bg);
-        }
+    .welcome-titles {
+      min-width: 0;
+    }
 
-        .pfp-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
+    .welcome-title {
+      margin: 0 0 4px 0;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      color: #111111;
+    }
 
-        .pfp-wrapper:hover img {
-            transform: scale(1.05);
-        }
+    .welcome-tm {
+      font-size: 13px;
+      vertical-align: top;
+      font-weight: 400;
+    }
 
-        .profile-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            margin-bottom: 0.25rem;
-        }
+    .welcome-subtitle {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.25;
+      color: #3a3a3a;
+    }
 
-        .profile-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
+    .welcome-subtitle-handle {
+      font-weight: 600;
+      color: #4f667a;
+    }
 
-        .profile-bio {
-            font-size: 0.925rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 2rem;
-        }
+    .split-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid #b5b5b5;
+      background-color: #f7f7f7;
+    }
 
-        /* Sidebar Nav Links */
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            width: 100%;
-            margin-bottom: 2rem;
-        }
+    .split-cell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      height: 60px;
+      min-height: 60px;
+      color: #111111;
+      text-decoration: none;
+      background-color: #f7f7f7;
+    }
 
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
+    .split-cell:first-child {
+      border-right: 1px solid #b5b5b5;
+    }
 
-        .nav-link svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-            flex-shrink: 0;
-        }
+    .split-cell:hover {
+      background-color: #ececec;
+    }
 
-        .nav-link:hover {
-            background-color: var(--card-bg);
-            color: var(--text-main);
-            transform: translateX(4px);
-        }
+    .cell-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
 
-        .nav-link.active {
-            background-color: var(--accent-glow);
-            color: var(--accent);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-        }
+    .cell-label {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #111111;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-        .sidebar-footer {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            padding-top: 1.25rem;
-            width: 100%;
-        }
+    .badge {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
 
-        /* Right Main Content Area (Markdown Viewer) */
-        main.main-content {
-            margin-left: 320px;
-            flex: 1;
-            padding: 3rem 4rem;
-            max-width: 1000px;
-        }
+    .badge svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
 
-        .markdown-container {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 3rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
+    .badge--twitter {
+      background: linear-gradient(180deg, #4ec2f6 0%, #1da1f2 100%);
+      color: #ffffff;
+    }
 
-        /* Styling rendered Markdown elements */
-        .markdown-body {
-            color: var(--text-main);
-            font-size: 1rem;
-            line-height: 1.75;
-            word-wrap: break-word;
-        }
+    .badge--youtube {
+      background: linear-gradient(180deg, #ff4e45 0%, #cc0000 100%);
+      color: #ffffff;
+    }
 
-        .markdown-body h1, 
-        .markdown-body h2, 
-        .markdown-body h3, 
-        .markdown-body h4 {
-            color: #ffffff;
-            font-weight: 700;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-        }
+    .badge--telegram {
+      background: linear-gradient(180deg, #37aee2 0%, #1e96c8 100%);
+      color: #ffffff;
+    }
 
-        .markdown-body h1 {
-            font-size: 2.25rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.75rem;
-            margin-top: 0;
-        }
+    .badge--discord {
+      background: linear-gradient(180deg, #7289da 0%, #5865f2 100%);
+      color: #ffffff;
+    }
 
-        .markdown-body h2 {
-            font-size: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
-        }
+    .badge--project {
+      background: linear-gradient(180deg, #ececec 0%, #cfcfcf 100%);
+      color: #3a3a3a;
+    }
 
-        .markdown-body h3 {
-            font-size: 1.25rem;
-        }
+    .badge--green {
+      background: linear-gradient(180deg, #63c757 0%, #3aa331 100%);
+      color: #ffffff;
+    }
 
-        .markdown-body p {
-            margin-bottom: 1.25rem;
-            color: var(--text-muted);
-        }
+    .badge--neutral {
+      background: linear-gradient(180deg, #e7e7e7 0%, #cccccc 100%);
+      color: #333333;
+    }
 
-        .markdown-body a {
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px dotted var(--accent);
-            transition: var(--transition);
-        }
+    .chevron {
+      width: 14px;
+      height: 22px;
+      flex-shrink: 0;
+      color: #8c8c8c;
+    }
 
-        .markdown-body a:hover {
-            border-bottom-style: solid;
-        }
+    .list-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 14px;
+      min-height: 64px;
+      border-bottom: 1px solid #b5b5b5;
+      background-color: #f4f4f4;
+      color: #111111;
+      text-decoration: none;
+    }
 
-        .markdown-body ul, .markdown-body ol {
-            margin-bottom: 1.25rem;
-            padding-left: 1.5rem;
-            color: var(--text-muted);
-        }
+    .list-row--tinted {
+      background-color: #e4f3df;
+    }
 
-        .markdown-body li {
-            margin-bottom: 0.5rem;
-        }
+    .list-row--plain {
+      background-color: #f7f7f7;
+    }
 
-        .markdown-body code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            color: var(--accent);
-        }
+    .list-row:hover {
+      background-color: #e8e8e8;
+    }
 
-        .markdown-body pre {
-            background-color: #12141a;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.25rem;
-            overflow-x: auto;
-            margin-bottom: 1.25rem;
-        }
+    .list-row--tinted:hover {
+      background-color: #d7ebd0;
+    }
 
-        .markdown-body pre code {
-            background-color: transparent;
-            border: none;
-            padding: 0;
-            color: #e2e8f0;
-        }
+    .list-row-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
 
-        .markdown-body blockquote {
-            border-left: 4px solid var(--accent);
-            padding-left: 1rem;
-            margin-left: 0;
-            margin-right: 0;
-            margin-bottom: 1.25rem;
-            color: var(--text-muted);
-            font-style: italic;
-            background-color: rgba(56, 189, 248, 0.03);
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            border-radius: 0 6px 6px 0;
-        }
+    .list-row-title {
+      font-size: 21px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #111111;
+    }
 
-        .markdown-body table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1.25rem;
-        }
+    .list-row-desc {
+      margin-left: auto;
+      text-align: right;
+      font-size: 14px;
+      line-height: 1.25;
+      color: #3a3a3a;
+      flex-shrink: 0;
+    }
 
-        .markdown-body th, .markdown-body td {
-            border: 1px solid var(--border-color);
-            padding: 0.75rem;
-            text-align: left;
-        }
+    .list-row-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
 
-        .markdown-body th {
-            background-color: rgba(255, 255, 255, 0.03);
-            color: #ffffff;
-        }
+    .spacer-fill {
+      flex: 1 1 auto;
+      background-color: #f4f4f4;
+      min-height: 36px;
+    }
 
-        /* Responsive Design */
-        @media (max-width: 968px) {
-            body {
-                flex-direction: column;
-            }
-            aside.sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-                padding: 2rem;
-            }
-            main.main-content {
-                margin-left: 0;
-                padding: 2rem 1.5rem;
-            }
-            .markdown-container {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+    @media (min-width: 768px) {
+      .welcome-header {
+        padding: 20px 22px;
+      }
+
+      .split-cell {
+        padding: 14px 16px;
+        height: 64px;
+        min-height: 64px;
+      }
+
+      .list-row {
+        padding: 14px 16px;
+        min-height: 68px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .welcome-title {
+        font-size: 22px;
+      }
+
+      .welcome-subtitle {
+        font-size: 15px;
+      }
+
+      .cell-label,
+      .list-row-title {
+        font-size: 16px;
+      }
+
+      .list-row-desc {
+        font-size: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="wrapper">
-        <!-- Left Sidebar (West Side) -->
-        <aside class="sidebar">
-            <div class="profile-container">
-                <!-- Square Profile Picture -->
-                <div class="pfp-wrapper">
-                    <img src="https://raw.githubusercontent.com/avyrik/avyrik/refs/heads/main/pfp.png" alt="Profile Picture" onerror="this.src='https://placehold.co/300x300/1c202a/38bdf8?text=PFP'">
-                </div>
-                
-                <h1 class="profile-name">avyrik</h1>
-                <div class="profile-title">coder of 10 Languages</div>
-                <p class="profile-bio">pushing to main in my underwear at 3am.</p>
-                
-                <!-- Vertical Icon Links -->
-                <nav class="nav-links">
-                    <a href="https://github.com/avyrik/" target="_blank" rel="noopener noreferrer" class="nav-link">
-                        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                        GitHub
-                    </a>
-                    <a href="https://t.me/avyriksgroup/" target="_blank" rel="noopener noreferrer" class="nav-link">
-                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                        Telegram
-                    </a>
-                    <a href="https://x.com/avyrik_/" target="_blank" rel="noopener noreferrer" class="nav-link">
-                        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        Twitter
-                    </a>
-                    <a href="https://youtube.com/@avyrik" target="_blank" rel="noopener noreferrer" class="nav-link">
-                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                        YouTube
-                    </a>
-                    <a href="https://matrix.to/#/@angad:mozilla.org" target="_blank" rel="noopener noreferrer" class="nav-link">
-                        <svg viewBox="0 0 24 24"><path d="M.6 0h2.4v24H.6zM21 0h2.4v24H21zM5.4 7.2h2.4v9.6H5.4zm10.8 0h2.4v9.6h-2.4zm-5.4 3h2.4v6h-2.4z"/></svg>
-                        Matrix
-                    </a>
-                    <a href="mailto:angadsingh0@proton.me" class="nav-link">
-                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        Email
-                    </a>
-                </nav>
-            </div>
+  <div class="viewport-frame">
+    <main class="sheet">
+      <header class="welcome-header">
+        <div class="app-icon-box" aria-hidden="true">
+          <span class="app-icon-text">AS</span>
+        </div>
+        <div class="welcome-titles">
+          <h1 class="welcome-title">Welcome to my website</h1>
+          <p class="welcome-subtitle">I am Angad Singh and I love to code</p>
+        </div>
+      </header>
 
-            <div class="sidebar-footer">
-                &copy; 2026 Avyrik.<br>All rights reserved.
-            </div>
-        </aside>
+      <div class="split-row">
+        <a href="https://x.com/itsangadd" target="_blank" rel="noopener noreferrer" class="split-cell">
+          <span class="cell-left">
+            <span class="badge badge--twitter" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.643 4.937c-.835.37-1.732.62-2.675.733a4.67 4.67 0 0 0 2.048-2.578 9.3 9.3 0 0 1-2.958 1.13 4.66 4.66 0 0 0-7.938 4.25 13.229 13.229 0 0 1-9.602-4.868c-.4.69-.63 1.49-.63 2.342A4.66 4.66 0 0 0 3.96 7.824a4.647 4.647 0 0 1-2.11-.583v.06a4.66 4.66 0 0 0 3.737 4.568 4.692 4.692 0 0 1-2.104.08 4.661 4.661 0 0 0 4.352 3.234 9.348 9.348 0 0 1-5.786 1.995c-.376 0-.747-.022-1.112-.065a13.175 13.175 0 0 0 7.14 2.093c8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602a9.47 9.47 0 0 0 2.323-2.41z"/>
+              </svg>
+            </span>
+            <span class="cell-label">Twitter</span>
+          </span>
+          <svg class="chevron" viewBox="0 0 14 22" fill="none" aria-hidden="true">
+            <path d="M3 3L11 11L3 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
 
-        <!-- Right Main Content Area (Massive Markdown Viewer) -->
-        <main class="main-content">
-            <div class="markdown-container">
-                <div id="content" class="markdown-body">
-                    <!-- Markdown content will be loaded and rendered here -->
-                </div>
-            </div>
-        </main>
-    </div>
+        <a href="https://www.youtube.com/@itsangadd" target="_blank" rel="noopener noreferrer" class="split-cell">
+          <span class="cell-left">
+            <span class="badge badge--youtube" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.58 7.19a2.75 2.75 0 0 0-1.94-1.95C17.93 4.78 12 4.78 12 4.78s-5.93 0-7.64.46A2.75 2.75 0 0 0 2.42 7.19 28.8 28.8 0 0 0 2 12a28.8 28.8 0 0 0 .42 4.81 2.75 2.75 0 0 0 1.94 1.95c1.71.46 7.64.46 7.64.46s5.93 0 7.64-.46a2.75 2.75 0 0 0 1.94-1.95A28.8 28.8 0 0 0 22 12a28.8 28.8 0 0 0-.42-4.81zM10 15.2V8.8l5.4 3.2-5.4 3.2z"/>
+              </svg>
+            </span>
+            <span class="cell-label">YouTube</span>
+          </span>
+          <svg class="chevron" viewBox="0 0 14 22" fill="none" aria-hidden="true">
+            <path d="M3 3L11 11L3 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
 
-    <!-- Massive Markdown Content Script -->
-    <script>
-        const massiveMarkdown = `
-<div align="center">
+      <div class="split-row">
+        <a href="https://t.me/angadschannel" target="_blank" rel="noopener noreferrer" class="split-cell">
+          <span class="cell-left">
+            <span class="badge badge--telegram" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/>
+              </svg>
+            </span>
+            <span class="cell-label">Telegram</span>
+          </span>
+          <svg class="chevron" viewBox="0 0 14 22" fill="none" aria-hidden="true">
+            <path d="M3 3L11 11L3 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
 
-<img src="https://raw.githubusercontent.com/avyrik/avyrik/refs/heads/main/banner.png" width="100%" />
+        <a href="https://discord.gg/szF3pxsSVg" target="_blank" rel="noopener noreferrer" class="split-cell">
+          <span class="cell-left">
+            <span class="badge badge--discord" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.73 4.87a18.2 18.2 0 0 0-4.49-1.39.19.19 0 0 0-.2.09c-.19.35-.41.8-.56 1.15a16.82 16.82 0 0 0-4.96 0c-.15-.36-.37-.8-.57-1.15a.2.2 0 0 0-.2-.09 18.14 18.14 0 0 0-4.49 1.39.18.18 0 0 0-.08.07C1.27 9.15.5 13.32.88 17.44a.21.21 0 0 0 .08.14 18.33 18.33 0 0 0 5.51 2.78.2.2 0 0 0 .21-.07c.42-.58.8-1.19 1.12-1.83a.19.19 0 0 0-.1-.27 12.1 12.1 0 0 1-1.73-.82.2.2 0 0 1-.02-.33c.12-.09.23-.18.34-.27a.19.19 0 0 1 .2-.03c3.63 1.66 7.56 1.66 11.15 0a.19.19 0 0 1 .2.03c.11.09.22.18.34.27a.2.2 0 0 1-.02.33c-.56.33-1.14.6-1.73.82a.2.2 0 0 0-.1.27c.33.64.71 1.25 1.12 1.83a.19.19 0 0 0 .21.07 18.27 18.27 0 0 0 5.52-2.78.2.2 0 0 0 .08-.14c.45-4.77-.76-8.9-3.25-12.5a.15.15 0 0 0-.08-.07zM8.68 14.93c-1.09 0-1.99-1-1.99-2.23s.88-2.23 1.99-2.23c1.12 0 2.01 1.01 1.99 2.23 0 1.23-.88 2.23-1.99 2.23zm6.64 0c-1.09 0-1.99-1-1.99-2.23s.88-2.23 1.99-2.23c1.12 0 2.01 1.01 1.99 2.23 0 1.23-.87 2.23-1.99 2.23z"/>
+              </svg>
+            </span>
+            <span class="cell-label">Discord</span>
+          </span>
+          <svg class="chevron" viewBox="0 0 14 22" fill="none" aria-hidden="true">
+            <path d="M3 3L11 11L3 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
 
-<h1>yo its avyrik</h1>
+      <a href="https://news.itsangad.com" class="list-row">
+        <span class="list-row-main">
+          <span class="badge badge--neutral" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 6h16v12H4z"/>
+              <path d="M8 10h8M8 14h5"/>
+            </svg>
+          </span>
+          <span class="list-row-title">News</span>
+        </span>
+        <span class="list-row-right">
+          <svg class="chevron" viewBox="0 0 14 22" fill="none" aria-hidden="true">
+            <path d="M3 3L11 11L3 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
 
-<h2>languages</h2>
+      <a href="https://galaxynews.itsangad.com/" target="_blank" rel="noopener noreferrer" class="list-row list-row--plain">
+        <span class="list-row-main">
+          <span class="badge badge--neutral" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="4" width="16" height="16" rx="2"/>
+              <path d="M9 12h6M12 9v6"/>
+            </svg>
+          </span>
+          <span class="list-row-title">Galaxy News</span>
+        </span>
+        <span class="list-row-right">
+          <svg class="chevron" viewBox="0 0 14 22" fill="none" aria-hidden="true">
+            <path d="M3 3L11 11L3 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
 
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com)
-[![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://github.com)
-[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://github.com)
-[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://github.com)
-[![C](https://img.shields.io/badge/C-A8B9CC?style=for-the-badge&logo=c&logoColor=black)](https://github.com)
-[![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)](https://github.com)
-[![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)](https://github.com)
-[![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://github.com)
-[![Swift](https://img.shields.io/badge/Swift-F05138?style=for-the-badge&logo=swift&logoColor=white)](https://github.com)
-<h2>featured projects</h2>
+      <a href="https://downloadly.itsangad.com/" target="_blank" rel="noopener noreferrer" class="list-row list-row--plain">
+        <span class="list-row-main">
+          <span class="badge badge--neutral" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="4" width="16" height="16" rx="2"/>
+              <path d="M8 12h8"/>
+            </svg>
+          </span>
+          <span class="list-row-title">Downloadly</span>
+        </span>
+        <span class="list-row-right">
+          <svg class="chevron" viewBox="0 0 14 22" fill="none" aria-hidden="true">
+            <path d="M3 3L11 11L3 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
 
-[![Galaxy News](https://img.shields.io/badge/Galaxy_News-6B46C1?style=for-the-badge&logo=rss&logoColor=white)](https://alleycoders.github.io/galaxy-news/)
-[![Dotfiles](https://img.shields.io/badge/Dotfiles-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/angaddsinghh/dotfiles)
+      <a href="https://about.itsangad.com/" target="_blank" rel="noopener noreferrer" class="list-row list-row--tinted">
+        <span class="list-row-main">
+          <span class="badge badge--green" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4.5 19.5c0-3.3 3.4-5.5 7.5-5.5s7.5 2.2 7.5 5.5"/>
+            </svg>
+          </span>
+          <span class="list-row-title">About &amp; Contact</span>
+        </span>
+        <span class="list-row-right">
+          <svg class="chevron" viewBox="0 0 14 22" fill="none" aria-hidden="true">
+            <path d="M3 3L11 11L3 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
 
-<h2>info</h2>
-
-[![My Life](https://img.shields.io/badge/MY_LIFE-FAILING-critical?style=for-the-badge&logo=doomemacs&logoColor=white)](https://github.com)
-[![sanity check](https://img.shields.io/badge/sanity-segfault-critical?style=for-the-badge&logo=linux&logoColor=white)]()
-[![sleep schedule](https://img.shields.io/badge/sleep%20schedule-undefined-important?style=for-the-badge&logo=gnome&logoColor=white)]()
-`;
-
-        // Render Markdown into HTML using marked.js
-        document.getElementById('content').innerHTML = marked.parse(massiveMarkdown);
-    </script>
+      <div class="spacer-fill"></div>
+    </main>
+  </div>
 </body>
 </html>
